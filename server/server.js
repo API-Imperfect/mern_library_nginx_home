@@ -1,12 +1,20 @@
 require("dotenv").config();
 const express = require("express");
 const connectToDB = require("./database/db");
+const ErrorsMiddleware = require("./middleware/mongooseErrorHandler");
 
 // Initialize the app
 const app = express();
 
 //connect to database
 connectToDB();
+
+//uncaught exception
+process.on("uncaughtException", (error) => {
+    console.log("Uncaught Exception! 💣 🔥 stopping the server...");
+    console.log(error.name, error.message);
+    process.exit(1);
+});
 
 // enable our app to parse JSON
 app.use(express.json());
@@ -21,10 +29,23 @@ app.get("/test", (req, res) => {
     });
 });
 
+// Error middleware
+app.use(ErrorsMiddleware);
+
 // Make the server listen on the declared PORT variable
-app.listen(
+const server = app.listen(
     PORT,
     console.log(
         `Server running in ${process.env.NODE_ENV} mode on  port ${PORT}`
     )
 );
+
+//unhandled Rejection
+process.on("unhandledRejection", (error) => {
+    console.log("Unhandled Rejection.... 💣 🔥 stopping the server...");
+    console.log(error.name, error.message);
+    server.close(() => {
+        //exit code 1 means that there is an issue that caused the program to exit.
+        process.exit(1);
+    });
+});
