@@ -1,9 +1,14 @@
 # specify base image from dockerhub
 FROM node:14-alpine3.10
 
+RUN mkdir -p /app
+
+LABEL version="1.0"
+LABEL description="Development Image for the Library MERN Youtube series"
+
 # workdir is where our code shall live in the container
 # all other commande will be executed relative to this directory
-WORKDIR /app
+WORKDIR /app 
 
 COPY ["package.json", "package-lock.json*","npm-shrinkwrap.json*", "./"]
 

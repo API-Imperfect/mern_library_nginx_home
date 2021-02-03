@@ -7,7 +7,7 @@ const mongooseErrorHandler = (err, req, res, next) => {
 
     // handle invalid paths in API(CastError)
     if (err.name === "CastError") {
-        const message = `Invalid ${err.path}:${err.value}. This resource doesn't exist`;
+        const message = `Invalid ${err.path}: ${err.value}. This resource doesn't exist`;
         error = new LibraryError(message, 404);
     }
 

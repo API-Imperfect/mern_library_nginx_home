@@ -2,12 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const connectToDB = require("./database/db");
 const ErrorsMiddleware = require("./middleware/mongooseErrorHandler");
-
-// Initialize the app
-const app = express();
-
-//connect to database
-connectToDB();
+const bookRoutes = require("./routes/bookRoutes");
 
 //uncaught exception
 process.on("uncaughtException", (error) => {
@@ -15,6 +10,12 @@ process.on("uncaughtException", (error) => {
     console.log(error.name, error.message);
     process.exit(1);
 });
+
+// Initialize the app
+const app = express();
+
+//connect to database
+connectToDB();
 
 // enable our app to parse JSON
 app.use(express.json());
@@ -28,6 +29,8 @@ app.get("/test", (req, res) => {
         Hi: "Welcome to the MERN Library API",
     });
 });
+
+app.use("/api/v1/", bookRoutes);
 
 // Error middleware
 app.use(ErrorsMiddleware);

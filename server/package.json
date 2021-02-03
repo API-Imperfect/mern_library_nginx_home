@@ -27,7 +27,7 @@
       "tabWidth": 4
    },
    "engines": {
-      "node":">=14.13.0"
+      "node": ">=14.13.0"
    },
    "scripts": {
       "start": "node server.js",

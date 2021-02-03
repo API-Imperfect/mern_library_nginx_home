@@ -1,12 +1,13 @@
 version: "3.9"
 
 services:
-  library-api-home:
+  library-api:
     restart: always
     build:
       context: ./server
       dockerfile: Dockerfile.dev
-    container_name: Library-API-Home
+    container_name: Library-API
+    # Volumes allow sharing of data in run-time between host and container
     volumes:
       # don't overwrite this folder in the container with the one in our local 
       # directory
@@ -21,6 +22,8 @@ services:
     environment:
       NODE_ENV: ${NODE_ENV} 
       MONGO_URI: mongodb://${MONGO_ROOT_USERNAME}:${MONGO_ROOT_PASSWORD}@mongodb
+    networks:
+      - library-api  
       
   mongodb:
     image: mongo
@@ -32,7 +35,9 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
     volumes:
       # for persistence storage
-      - mongodb-data-home:/data/db
+      - mongo-data:/data/db
+    networks:
+      - library-api   
 
   # mongo-express should only be used privately for development purposes.
   # It helps us interact with a mongoDB database using our browser
@@ -49,10 +54,17 @@ services:
       ME_CONFIG_BASICAUTH_USERNAME: admin
       ME_CONFIG_BASICAUTH_PASSWORD: admin123456
     volumes:
-      - mongodb-data-home
-      
+      - mongo-data
+    networks:
+      - library-api 
+
+networks:
+  library-api:
+    driver: bridge       
+
 volumes:
-  mongodb-data-home:      
+  mongo-data:
+    driver: local      
 
 
            
