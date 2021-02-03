@@ -6,7 +6,7 @@ RUN mkdir -p /app
 LABEL version="1.0"
 LABEL description="Development Image for the Library MERN Youtube series"
 
-ENV NODE_ENV=${NODE_ENV}
+ENV NODE_ENV=$NODE_ENV
 # workdir is where our code shall live in the container
 # all other commande will be executed relative to this directory
 WORKDIR /app 
