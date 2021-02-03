@@ -1,8 +1,9 @@
 require("dotenv").config();
 const express = require("express");
 const connectToDB = require("./database/db");
-const ErrorsMiddleware = require("./middleware/mongooseErrorHandler");
+const ErrorMiddleware = require("./middleware/errorMiddleware");
 const bookRoutes = require("./routes/bookRoutes");
+const LibraryError = require("./utils/libraryError");
 
 //uncaught exception
 process.on("uncaughtException", (error) => {
@@ -33,7 +34,12 @@ app.get("/test", (req, res) => {
 app.use("/api/v1/", bookRoutes);
 
 // Error middleware
-app.use(ErrorsMiddleware);
+app.all("*", (req, res, next) => {
+    next(
+        new LibraryError(`Can't find ${req.originalUrl} on this server!`, 404)
+    );
+});
+app.use(ErrorMiddleware);
 
 // Make the server listen on the declared PORT variable
 const server = app.listen(

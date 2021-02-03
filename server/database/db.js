@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 //create a database connection variable and export it
 const connectToDB = async () => {
     const connect = await mongoose.connect(process.env.MONGO_URI, {
+        dbName: process.env.DB_NAME,
         useNewUrlParser: true,
         useCreateIndex: true,
         useUnifiedTopology: true,

@@ -68,6 +68,6 @@ exports.deleteBook = AsyncManager(async (req, res, next) => {
         return next(new LibraryError(`That book is not available`, 404));
     }
 
-    book.remove();
+    await book.remove();
     return res.status(200).json({ success: true, data: {} });
 });
