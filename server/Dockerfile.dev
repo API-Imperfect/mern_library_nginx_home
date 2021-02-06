@@ -1,12 +1,9 @@
 # specify base image from dockerhub
 FROM node:14-alpine3.10
 
-RUN mkdir -p /app
-
 LABEL version="1.0"
-LABEL description="Development Image for the Library MERN Youtube series"
+LABEL description="Development Image for the Library MERN API"
 
-ENV NODE_ENV=$NODE_ENV
 # workdir is where our code shall live in the container
 # all other commande will be executed relative to this directory
 WORKDIR /app 
