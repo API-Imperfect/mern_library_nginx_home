@@ -1,0 +1,18 @@
+# specify base image from dockerhub
+FROM node:14-alpine3.10
+
+LABEL version="1.0"
+LABEL description="React Frontend for the Library API"
+
+WORKDIR /app 
+
+# copy package.json to our workdir
+COPY ./package.json ./
+
+RUN npm install
+
+# copy over all files from source directory
+COPY . .
+
+CMD ["npm", "run", "start"]
+
