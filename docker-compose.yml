@@ -6,7 +6,7 @@ services:
       build:
          context: ./server
          dockerfile: Dockerfile.dev
-      # container_name: library_mern_api
+      container_name: library_mern_api_home
       # Volumes allow sharing of data in run-time between host and container
       volumes:
          # don't overwrite this folder in the container with the one in our local
@@ -62,7 +62,7 @@ services:
       build:
          context: ./client
          dockerfile: Dockerfile.dev
-      # container_name: library_mern_frontend
+      container_name: library_mern_frontend_home
       volumes:
         # don't overwrite this folder in the container with the one in our local
         # directory

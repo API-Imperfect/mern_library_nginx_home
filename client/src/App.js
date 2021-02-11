@@ -1,15 +1,34 @@
-import "./App.css";
-import logo from "./logo.svg";
+import React from "react";
+import { Button, Container, Jumbotron } from "react-bootstrap";
+import {BrowserRouter as Router} from "react-router-dom"
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import { LinkContainer } from "react-router-bootstrap";
 
-function App() {
+const App = () => {
    return (
-      <div className="App">
-         <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <p>Welcome to the world of maddness</p>
-         </header>
-      </div>
+      <Router>
+         <Header />
+         <main className="py-3">
+            <Container>
+               <Jumbotron>
+                  <h1 className="text-center">Welcome to My Library!</h1>
+                  <p className="text-center">
+                     This is a simple Fullstack MERN Application to demonstrate
+                     how Nginx and Docker can be used in this workflow
+                  </p>
+                  <p className="text-center">
+                     <LinkContainer to="/books">
+                        <Button variant="success" size="lg">
+                           My Books
+                        </Button>
+                     </LinkContainer>
+                  </p>
+               </Jumbotron>
+            </Container>
+         </main>
+         <Footer />
+      </Router>
    );
-}
-
+};
 export default App;
