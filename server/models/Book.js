@@ -21,6 +21,10 @@ const BookSchema = new mongoose.Schema(
             trim: true,
             maxlength: [50, "Book title can't be more than 50 characters"],
         },
+        description: {
+            type: String,
+            required: [true, "Please add a description"],
+        },
         author: {
             type: String,
             required: [true, "Please add an author"],
